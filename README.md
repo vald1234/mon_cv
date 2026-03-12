@@ -67,7 +67,7 @@ Ou simplement double-cliquer sur `index.html`.
 
 **KAKPO Oswald**  
 Étudiant en Licence 1 SIL — ESCAE-Bénin  
-oswald.kakpo@gmail.com
+gottioswald@gmail.com
 
 ---
 
