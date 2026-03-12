@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV - KAKPO Oswald</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #f5f4f0;
+      --surface: #ffffff;
+      --border:  #e2dfd8;
+      --accent:  #1a3a5c;
+      --gold:    #c8a45a;
+      --text:    #1e1e1e;
+      --muted:   #6b6b6b;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── RADIOS CACHÉS ── */
+    input[type="radio"] { display: none; }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      height: 58px;
+      gap: 0.25rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+
+    .brand {
+      font-family: 'DM Serif Display', serif;
+      color: #fff;
+      font-size: 1rem;
+      letter-spacing: .4px;
+      margin-right: auto;
+      pointer-events: none;
+    }
+
+    label.nav-btn {
+      color: rgba(255,255,255,.6);
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      padding: .45rem 1.1rem;
+      border: 1.5px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    label.nav-btn:hover {
+      color: #fff;
+      border-color: var(--gold);
+      background: rgba(200,164,90,.1);
+    }
+
+    #tab-cv:checked    ~ nav label[for="tab-cv"],
+    #tab-liste:checked ~ nav label[for="tab-liste"] {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(200,164,90,.1);
+    }
+
+    /* ── SECTIONS ── */
+    .page { display: none; }
+
+    #tab-cv:checked    ~ .pages > #cv    { display: block; }
+    #tab-liste:checked ~ .pages > #liste { display: block; }
+
+    /* ════════════════ CV ════════════════ */
+    .cv-wrap {
+      max-width: 860px;
+      margin: 2.5rem auto;
+      padding: 0 1.25rem 3rem;
+    }
+
+    /* En-tête avec photo */
+    .cv-header {
+      background: var(--accent);
+      border-radius: 8px 8px 0 0;
+      padding: 2rem 2.5rem;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    .cv-header::after {
+      content: '';
+      position: absolute;
+      right: -30px;
+      bottom: -40px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 45px solid rgba(200,164,90,.15);
+      pointer-events: none;
+    }
+
+    /* ── PHOTO DE PROFIL ── */
+    .profile-photo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      flex-shrink: 0;
+      background: #2a5080;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Avatar SVG par défaut — remplacer par <img src="photo.jpg"> si disponible */
+    .profile-photo svg {
+      width: 56px;
+      height: 56px;
+    }
+
+    .cv-header-text { position: relative; z-index: 1; }
+
+    .cv-header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.9rem;
+      letter-spacing: .4px;
+    }
+
+    .cv-header .subtitle {
+      margin-top: .35rem;
+      font-size: .9rem;
+      color: var(--gold);
+      font-weight: 500;
+      letter-spacing: .4px;
+    }
+
+    /* Corps du CV */
+    .cv-body {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      padding: 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 3rem;
+    }
+
+    @media (max-width: 620px) {
+      .cv-body { grid-template-columns: 1fr; }
+      .cv-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+
+    .cv-section      { margin-bottom: 1.8rem; }
+    .cv-section.full { grid-column: 1 / -1; }
+
+    .cv-section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: .95rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding-bottom: .45rem;
+      border-bottom: 1.5px solid var(--gold);
+      margin-bottom: .9rem;
+    }
+
+    .info-row {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: .5rem;
+      font-size: .87rem;
+      line-height: 1.55;
+    }
+
+    .info-row .label {
+      font-weight: 600;
+      color: var(--accent);
+      min-width: 82px;
+      flex-shrink: 0;
+    }
+
+    .info-row .value { color: var(--muted); }
+
+    ul.cv-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.cv-list li {
+      font-size: .87rem;
+      color: var(--muted);
+      padding: .3rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: .5rem;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+
+    ul.cv-list li::before {
+      content: '—';
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    ul.cv-list li:last-child { border-bottom: none; }
+
+    /* Compétences groupées */
+    .skills-group { margin-bottom: .85rem; }
+
+    .skills-group-title {
+      font-size: .74rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      margin-bottom: .35rem;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      background: #eef2f7;
+      color: var(--accent);
+      border: 1px solid #cfdbe9;
+      border-radius: 3px;
+      font-size: .77rem;
+      font-weight: 600;
+      padding: .2rem .65rem;
+      margin: .2rem .2rem 0 0;
+      letter-spacing: .3px;
+    }
+
+    .skill-tag.office {
+      background: #f0f7ee;
+      border-color: #b8d9b2;
+      color: #2d6a27;
+    }
+
+    /* Lien liste étudiants en bas du CV */
+    .btn-liste {
+      display: inline-block;
+      margin-top: .5rem;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1.5px solid var(--accent);
+      padding: .4rem 1rem;
+      border-radius: 4px;
+      letter-spacing: .4px;
+    }
+
+    .btn-liste:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* ════════════════ LISTE ════════════════ */
+    .liste-wrap {
+      max-width: 980px;
+      margin: 2.5rem auto;
+      padding: 0 1.25rem 3rem;
+    }
+
+    .liste-header {
+      background: var(--accent);
+      border-radius: 8px 8px 0 0;
+      padding: 1.5rem 2rem;
+      color: #fff;
+    }
+
+    .liste-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem;
+    }
+
+    .liste-header p {
+      margin-top: .3rem;
+      font-size: .82rem;
+      color: var(--gold);
+      letter-spacing: .4px;
+    }
+
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .83rem;
+    }
+
+    thead tr { background: #f0ede6; }
+
+    thead th {
+      text-align: left;
+      padding: .7rem 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      font-size: .76rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      border-bottom: 2px solid var(--gold);
+      white-space: nowrap;
+    }
+
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f8f6f1; }
+
+    tbody td { padding: .58rem 1rem; color: var(--muted); }
+
+    tbody td:first-child {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: .76rem;
+      width: 40px;
+    }
+
+    tbody td:nth-child(2) { font-weight: 600; color: var(--text); }
+
+    .highlight                 { background: #edf4fb; }
+    .highlight td:nth-child(2) { color: var(--accent); }
+
+  </style>
+</head>
+<body>
+
+  <input type="radio" name="tab" id="tab-cv" checked />
+  <input type="radio" name="tab" id="tab-liste" />
+
+  <nav>
+    <span class="brand">KAKPO Oswald &mdash; Portfolio</span>
+    <label class="nav-btn" for="tab-cv">CV</label>
+    <label class="nav-btn" for="tab-liste">Liste des étudiants</label>
+  </nav>
+
+  <div class="pages">
+
+    <!-- ══════════════════════════════ CV ══════════════════════════════ -->
+    <section id="cv" class="page">
+      <div class="cv-wrap">
+
+        <div class="cv-header">
+
+          <!-- Photo de profil (avatar SVG par défaut) -->
+          <!-- Pour utiliser une vraie photo : remplacer le bloc .profile-photo par :
+               <img class="profile-photo" src="photo.jpg" alt="Photo de profil" /> -->
+          <div class="profile-photo">
+            <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Tête -->
+              <circle cx="28" cy="20" r="11" fill="rgba(200,164,90,.55)" />
+              <!-- Corps -->
+              <ellipse cx="28" cy="44" rx="16" ry="10" fill="rgba(200,164,90,.35)" />
+            </svg>
+          </div>
+
+          <div class="cv-header-text">
+            <h1>KAKPO Oswald</h1>
+            <div class="subtitle">Étudiant en Licence 1 SIL &mdash; ESCAE Bénin, Promotion 2026</div>
+          </div>
+
+        </div>
+
+        <div class="cv-body">
+
+          <!-- Informations personnelles -->
+          <div class="cv-section">
+            <h2>Informations personnelles</h2>
+            <div class="info-row">
+              <span class="label">Téléphone</span>
+              <span class="value">01 54 90 53 10</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Email</span>
+              <span class="value">oswald.kakpo@gmail.com</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Adresse</span>
+              <span class="value">Cotonou, Bénin</span>
+            </div>
+          </div>
+
+          <!-- Compétences -->
+          <div class="cv-section">
+            <h2>Compétences</h2>
+
+            <div class="skills-group">
+              <div class="skills-group-title">Développement web</div>
+              <span class="skill-tag">HTML / CSS</span>
+              <span class="skill-tag">Algorithmique</span>
+              <span class="skill-tag">Langage C</span>
+            </div>
+
+            <div class="skills-group">
+              <div class="skills-group-title">Outils bureautiques</div>
+              <span class="skill-tag office">Microsoft Word</span>
+              <span class="skill-tag office">Microsoft Excel</span>
+              <span class="skill-tag office">PowerPoint</span>
+            </div>
+          </div>
+
+          <!-- Langues -->
+          <div class="cv-section">
+            <h2>Langues</h2>
+            <ul class="cv-list">
+              <li>Français &mdash; courant</li>
+              <li>Anglais &mdash; intermédiaire</li>
+            </ul>
+          </div>
+
+          <!-- Formation -->
+          <div class="cv-section">
+            <h2>Formation</h2>
+            <ul class="cv-list">
+              <li>2025 &ndash; 2026 &nbsp;&middot;&nbsp; Licence 1 SIL, ESCAE-Bénin</li>
+              <li>2024 &ndash; 2025 &nbsp;&middot;&nbsp; Baccalauréat D</li>
+            </ul>
+          </div>
+
+          <!-- Centres d'intérêt -->
+          <div class="cv-section full">
+            <h2>Centres d'intérêt</h2>
+            <ul class="cv-list" style="display:flex; flex-wrap:wrap; gap:1.5rem;">
+              <li style="border:none; padding:.2rem 0;">Jeux vidéo</li>
+              <li style="border:none; padding:.2rem 0;">Sport</li>
+            </ul>
+          </div>
+
+          <!-- Lien vers la liste -->
+          <div class="cv-section full" style="margin-bottom:0;">
+            <label class="btn-liste" for="tab-liste">Voir la liste des étudiants</label>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════ LISTE ══════════════════════════════ -->
+    <section id="liste" class="page">
+      <div class="liste-wrap">
+
+        <div class="liste-header">
+          <h2>ESCAE-Bénin</h2>
+          <p>Licence 1 SIL / SI / IA &mdash; Promotion 2026</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>N&deg;</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>ABDOULAYE</td><td>Moufidatou</td><td>naidou.147@gmail.com</td></tr>
+              <tr><td>2</td><td>ADDA</td><td>Adonaï</td><td>marketingopportunite@gmail.com</td></tr>
+              <tr><td>3</td><td>ADDA</td><td>Kenneth.S</td><td>kennethadda7@gmail.com</td></tr>
+              <tr><td>4</td><td>ADIBA</td><td>Diéo Gracias</td><td>diéograciasguyodiba@gmail.com</td></tr>
+              <tr><td>5</td><td>ADJOLOHOUN</td><td>Haïwane Matéo</td><td>Toowane1106@icloud.com</td></tr>
+              <tr><td>6</td><td>AGONDO</td><td>Séverin</td><td>agondoseverin88@gmail.com</td></tr>
+              <tr><td>7</td><td>AHISSOU</td><td>Karl</td><td>karlahissou229@gmail.com</td></tr>
+              <tr><td>8</td><td>AHOUANGNIVO</td><td>Prince</td><td>ahprince736@gmail.com</td></tr>
+              <tr><td>9</td><td>AKOTDO</td><td>Kevin</td><td>akotdokevin358@gmail.com</td></tr>
+              <tr><td>10</td><td>ALLE</td><td>Sourou Marcel</td><td>marcelalle3@gmail.com</td></tr>
+              <tr><td>11</td><td>ALLIDJINOU</td><td>Cédric</td><td>allidjinoucedric123@gmail.com</td></tr>
+              <tr><td>12</td><td>ATCHADE</td><td>Carine</td><td>carineatchade95@gmail.com</td></tr>
+              <tr><td>13</td><td>ATCHIDI</td><td>Arsène</td><td>arseneatchidi@gmail.com</td></tr>
+              <tr><td>14</td><td>BACHABI</td><td>Affissou</td><td>bachabi261@gmail.com</td></tr>
+              <tr><td>15</td><td>BADA</td><td>Folake</td><td>badagilbertkon@gmail.com</td></tr>
+              <tr><td>16</td><td>BAHINGOI</td><td>Joseph</td><td>bahingo@gmail.com</td></tr>
+              <tr><td>17</td><td>DANNON</td><td>Girod</td><td>dannongirod2006@gmail.com</td></tr>
+              <tr><td>18</td><td>DJIMADE</td><td>M.S. Florent</td><td>mkdydjimflor@gmail.com</td></tr>
+              <tr><td>19</td><td>DOSSOU</td><td>Pythagore</td><td>pythadoss@gmail.com</td></tr>
+              <tr><td>20</td><td>DOSSA</td><td>Steeve</td><td>steevessteeve2005@gmail.com</td></tr>
+              <tr><td>21</td><td>GBETI</td><td>David Modeste</td><td>gbetidavidmodeste@gmail.com</td></tr>
+              <tr><td>22</td><td>GOHOUNSO</td><td>Nasrallah Sègnon</td><td>nasrallahgohoungo@gmail.com</td></tr>
+              <tr><td>23</td><td>HONDI</td><td>Mathieu</td><td>matthieuhondi@gmail.com</td></tr>
+              <tr><td>24</td><td>HOUEDISSI</td><td>David Josias</td><td>houedijsidavidjosias@gmail.com</td></tr>
+              <tr><td>25</td><td>HOUNKANRIN</td><td>Daniel</td><td>danehounx@gmail.com</td></tr>
+              <tr><td>26</td><td>HOUNKONNOU</td><td>Prince</td><td>hounkonouprince4671@gmail.com</td></tr>
+              <tr><td>27</td><td>HOUNKPE</td><td>Catherine</td><td>catherine@gmail.com</td></tr>
+              <tr><td>28</td><td>HOUNKPE</td><td>Catherine</td><td>catherine.hounkpe@example.com</td></tr>
+              <tr><td>29</td><td>HOULINDO</td><td>Sèss Ange</td><td>sesssiange11@gmail.com</td></tr>
+              <tr class="highlight"><td>30</td><td>KAKPO</td><td>Oswald</td><td>Oswaldkakpo73@gmail.com</td></tr>
+              <tr><td>31</td><td>KEBI</td><td>Élise Lariol</td><td>elisekeb354@gmail.com</td></tr>
+              <tr><td>32</td><td>KINNINKPO</td><td>Friselle</td><td>friselle56@gmail.com</td></tr>
+              <tr><td>33</td><td>KINNINKPO</td><td>Aziz</td><td>Azizkininnkpo87@gmail.com</td></tr>
+              <tr><td>34</td><td>KINNINHOUE</td><td>Fréjuste</td><td>Frejustekinninhooue@gmail.com</td></tr>
+              <tr><td>35</td><td>NONHOUEGNON</td><td>Philibert</td><td>philbertphilbert735@gmail.com</td></tr>
+              <tr><td>36</td><td>OGOUMIMA</td><td>Samuel</td><td>samuelogoumima@gmail.com</td></tr>
+              <tr><td>37</td><td>OKE</td><td>Moudjadine</td><td>Okétankpinou59@gmail.com</td></tr>
+              <tr><td>38</td><td>OROU YO</td><td>Sanni Aimé</td><td>aimeoroyo@gmail.com</td></tr>
+              <tr><td>39</td><td>RUSTICO</td><td>Charbel Eusebio Merdis</td><td>charbeltustico@gmail.com</td></tr>
+              <tr><td>40</td><td>SABI KORA</td><td>Bouè</td><td>korabioussabi@gmail.com</td></tr>
+              <tr><td>41</td><td>SEHOMI</td><td>Josué Nicolas</td><td>nicolasofficiel55@gmail.com</td></tr>
+              <tr><td>42</td><td>SOSSI</td><td>Harold</td><td>sossiharold@gmail.com</td></tr>
+              <tr><td>43</td><td>SOSSOU</td><td>Théodore</td><td>sitondjitheodoreoossou@gmail.com</td></tr>
+              <tr><td>44</td><td>TONOUKOUN</td><td>Bérénice</td><td>tonoukounberenice@gmail.com</td></tr>
+              <tr><td>45</td><td>VIGNON</td><td>D. Gurman</td><td>kanzualiyohoun@gmail.com</td></tr>
+              <tr><td>46</td><td>WESSREDI</td><td>Nastratou</td><td>nazkitahwessredj@gmail.com</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>
